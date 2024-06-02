@@ -46,7 +46,7 @@ It contains the endpoint details of flask application:
 
 
 ## Screen Recording Link
-[Recording Link]()
+[Recording Link](https://nagarro-my.sharepoint.com/:v:/p/jaishree_agarwal/Eeu7NxHtSjxHqd8IiSMcYn0B5s_CEvdO1S1LYv_GJmqXUQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=P0fN7e)
 
 ## Deployment Steps
 
@@ -60,7 +60,7 @@ It contains the endpoint details of flask application:
     * To create MySQL database using Stateful sets, run `kubectl apply -f mysql-statefulset.yaml`
     * To create headless cluster IP service for accessing the DB within cluster, run `kubectl apply -f mysql-service.yaml`
     * Once MySQL pod is up and running, login to the MySQL pod to create the database for flask application using command: `kubectl exec --stdin --tty <mysql podname> -- /bin/bash`
-    * Once login to the bash script, run command `mysql -p` to login into mysql server by passing password which is available in file `./kubernetes/mysql-secrets.yaml` file.
+    * Once login to the bash script, run command `mysql -p` to login into mysql server by passing password which is available in file `./kubernetes/secrets.yaml` file.
     * Run command `create database <db_name>` to create database in MySQL server and db_name is available in `./kubernetes/configmap.yaml` file.
     * Run command `exit` to come outside mysql and run command `exit` to come outside bash script.
 
