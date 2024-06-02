@@ -20,17 +20,21 @@ It contains the endpoint details of flask application:
 
 * Server Check Endpoint
 
+    `http://nagp.flaskapp.com:80/v1`
+
     Type of request: `GET`
-    `http://<loadbalancer_external_ip>:80/`
+
 * GET Employee Details Endpoint
-    
+
+    `http://nagp.flaskapp.com:80/v1/employee`
+
     Type of request: `GET`
-    `http://<loadbalancer_external_ip>:80/employee`
 
 * Add Employee Details Endpoint
 
+    `http://nagp.flaskapp.com:80/v1/add`
+
     Type of request: `POST`
-    `http://<loadbalancer_external_ip>:80/add`
     
     Request Payload:
     
@@ -59,8 +63,15 @@ It contains the endpoint details of flask application:
     * Once login to the bash script, run command `mysql -p` to login into mysql server by passing password which is available in file `./kubernetes/mysql-secrets.yaml` file.
     * Run command `create database <db_name>` to create database in MySQL server and db_name is available in `./kubernetes/configmap.yaml` file.
     * Run command `exit` to come outside mysql and run command `exit` to come outside bash script.
+
 * Steps to deploy Flask application:
     * To create the configmap, run `kubectl apply -f configmap.yaml`
     * To deploy the flask application, run `kubectl apply -f flask-deployment.yaml`
-    * To create load balancer service for accessing the application outside of cluster, run `kubectl apply -f flask-service.yaml`
+    * To create node port service for accessing the application outside of cluster, run `kubectl apply -f flask-nodeport-service.yaml`
+    * To enable the firewall for nodeport service port, run `gcloud compute firewall-rules create <rule name> --allow tcp:31000 --project <project id>`
     * To apply the horizontal autoscaling of pods in API server, run `kubectl apply -f flask-autoscaling.yaml`
+
+* Steps to deploy Ingress:
+    * To create Ingress controller, run `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml`
+    * To create Ingress which act as an entrypoint to the cluster, run `kubectl apply -f flask-ingress.yaml`
+    * Once ingress is up and running, copy the external IP of ingress to create the mapping with the specified host `nagp.flaskapp.com` in `/etc/host` file
